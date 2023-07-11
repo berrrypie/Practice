@@ -2,17 +2,20 @@ package ru.Anastasia.telegrambot.entities;
 
 import javax.persistence.*;
 
+/** Сущность категория товара */
 @Entity
-public class Category { // Сущность категория товара
-    @Id
-    @GeneratedValue // Значение будет сгенерировано автоматически
-    private Long id; // Уникальный идентификатор
-    @Column(nullable = false,length = 50)
-    private String Name; // Название категории
-    @ManyToOne // Тип связи в БД - "Многие к одному"
-    private Category parent; // Родительская категория
+public class Category {
 
-    // Геттеры и сеттеры для private-полей
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false,length = 50)
+    private String name;
+
+    @ManyToOne
+    private Category parent;
+
 
     public void setParent(Category parent) {
         this.parent = parent;
@@ -23,11 +26,11 @@ public class Category { // Сущность категория товара
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setId(Long id) {

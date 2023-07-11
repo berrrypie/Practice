@@ -6,5 +6,4 @@ import ru.Anastasia.telegrambot.entities.ClientOrder;
 
 @RepositoryRestResource(collectionResourceRel = "clientOrders",path = "clientOrders")
 public interface ClientOrderRepository extends JpaRepository<ClientOrder,Long> {
-
 }

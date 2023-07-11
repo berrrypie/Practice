@@ -1,27 +1,32 @@
 package ru.Anastasia.telegrambot.entities;
 
-
 import javax.persistence.*;
 
+/** Сущность клиент */
 @Entity
-public class Client { // Сущность клиент
-    @Id
-    @GeneratedValue // Значение будет сгенерировано автоматически
-    private Long id; // Уникальный идентификатор
-    @Column(nullable = false)
-    private Long externalId; //Внешний идентификатор Telegram
-    @Column(nullable = false,length = 255)
-    private String fullName; // Имя клиента или форма обращения
-    @Column(nullable = false,length = 15)
-    private String phoneNumber; // номер телефона
-    @Column(nullable = false,length = 400)
-    private String address; // адрес
+public class Client {
 
-    // Геттеры и сеттеры для private-полей
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(nullable = false)
+    private Long externalId;
+
+    @Column(nullable = false,length = 255)
+    private String fullName;
+
+    @Column(nullable = false,length = 25)
+    private String phoneNumber;
+
+    @Column(nullable = false,length = 400)
+    private String address;
+
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

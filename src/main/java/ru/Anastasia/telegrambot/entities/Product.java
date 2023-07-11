@@ -2,21 +2,26 @@ package ru.Anastasia.telegrambot.entities;
 
 import javax.persistence.*;
 
+/** Сущность товар */
 @Entity
-public class Product { // Сущность товар
-    @Id
-    @GeneratedValue // Значение будет сгенерировано автоматически
-    private Long id; // Уникальный идентификатор
-    @ManyToOne // Связь в БД - "многие к одному"
-    private Category category; // Категория товара
-    @Column(nullable = false, length = 50)
-    private String name; // Наименование
-    @Column(nullable = false, length = 400)
-    private String description; // Описание
-    @Column(nullable = false)
-    private Double price; // Стоимость
+public class Product {
 
-    // Геттеры и сеттеры для private-полей
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne
+    private Category category;
+
+    @Column(nullable = false, length = 50)
+    private String name;
+
+    @Column(nullable = false, length = 400)
+    private String description;
+
+    @Column(nullable = false)
+    private Double price;
+
 
     public void setCategory(Category category) {
         this.category = category;

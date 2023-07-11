@@ -2,19 +2,23 @@ package ru.Anastasia.telegrambot.entities;
 
 import javax.persistence.*;
 
+/** Сущность Заказ-Товар */
 @Entity
-public class OrderProduct { // Сущность Заказ-Товар
-    @Id
-    @GeneratedValue // Значение будет сгенерировано автоматически
-    private Long id; // Уникальный идентификатор
-    @ManyToOne // Тип связи в БД - "Многие к одному"
-    private ClientOrder clientOrder; // Заказ клиента
-    @ManyToOne // Тип связи в БД - "Многие к одному"
-    private Product product; // Товар в заказе
-    @Column
-    private Long countProduct; // Кол-во товара в заказе
+public class OrderProduct {
 
-    // Геттеры и сеттеры для private-полей
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne
+    private ClientOrder clientOrder;
+
+    @ManyToOne
+    private Product product;
+
+    @Column
+    private Long countProduct;
+
 
     public void setCountProduct(Long countProduct) {
         this.countProduct = countProduct;
