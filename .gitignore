@@ -21,6 +21,8 @@ target/
 *.cmd
 .mvn/
 mvnw
+*.mv.db
+
 
 ### NetBeans ###
 /nbproject/private/
