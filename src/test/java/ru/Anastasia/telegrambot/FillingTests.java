@@ -3,10 +3,10 @@ package ru.Anastasia.telegrambot;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.Anastasia.telegrambot.entities.Category;
-import ru.Anastasia.telegrambot.entities.Product;
-import ru.Anastasia.telegrambot.repositories.CategoryRepository;
-import ru.Anastasia.telegrambot.repositories.ProductRepository;
+import ru.Anastasia.telegrambot.entities.*;
+import ru.Anastasia.telegrambot.repositories.*;
+
+import java.util.Optional;
 
 @SpringBootTest
  class FillingTests {
@@ -16,6 +16,15 @@ import ru.Anastasia.telegrambot.repositories.ProductRepository;
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientOrderRepository clientOrderRepository;
+
+    @Autowired
+    private OrderProductRepository orderProductRepository;
 
     /** Метод для создания объекта основной категории */
     private void createMainCategory(String name) {
@@ -44,6 +53,34 @@ import ru.Anastasia.telegrambot.repositories.ProductRepository;
         productRepository.save(product);
 
     }
+
+    /** Метод для создания объекта клиент */
+    private void createClient(Long extid,String fullName,String number,String address){
+        Client client = new Client();
+        client.setExternalId(extid);
+        client.setFullName(fullName);
+        client.setPhoneNumber(number);
+        client.setAddress(address);
+        clientRepository.save(client);
+    }
+    /** Метод для создания объекта заказ-товар */
+    private void createOrderProduct(ClientOrder clientOrder,Product product,Long countProduct){
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setClientOrder(clientOrder);
+        orderProduct.setProduct(product);
+        orderProduct.setCountProduct(countProduct);
+        orderProductRepository.save(orderProduct);
+    }
+
+    /** Метод для создания объекта заказ-клиент */
+    private void createClientOrder(Client client,Integer status, Double total){
+        ClientOrder clientOrder = new ClientOrder();
+        clientOrder.setClient(client);
+        clientOrder.setStatus(status);
+        clientOrder.setTotal(total);
+        clientOrderRepository.save(clientOrder);
+    }
+
 
 
     @Test
@@ -215,6 +252,45 @@ import ru.Anastasia.telegrambot.repositories.ProductRepository;
 
         createProduct(categoryRepository.findByName("Другие"), "Лимонад",
                 "Груша/Лимон/Фейхоа",170.99);
+    }
+    @Test
+    void createClientObjects(){
+        createClient(1L,"Кабисов Валерий Юрьевич","+7(978)657-45-67",
+                "г.Владикавказ,ул.Генерала Плиева,д.115");
+        createClient(2L,"Пупкина Алевтина Леопольдовна","+7(978)794-32-64",
+                "г.Севастополь,ул.Пушкина,д.194");
+        createClient(2L,"Зубенко Михаил Петрович","+7(978)536-09-45",
+                "г.Севастополь,ул.Терновая,д.89");
+    }
+
+    @Test
+    void createOrderProductObjects(){
+
+    Optional<ClientOrder> co1 = clientOrderRepository.findById(1L);
+    Optional<Product> product1 = productRepository.findById(2L);
+    if(co1.isPresent() && product1.isPresent()) {
+        createOrderProduct(co1.get(), product1.get(), 2L);
+    }
+
+    Optional<ClientOrder> co2 = clientOrderRepository.findById(2L);
+    Optional<Product> product2 = productRepository.findById(13L);
+    if(co2.isPresent() && product2.isPresent()){
+        createOrderProduct(co2.get(),product2.get(),1L);
+    }
+
+        Optional<ClientOrder> co3 = clientOrderRepository.findById(3L);
+        Optional<Product> product3 = productRepository.findById(17L);
+        if(co3.isPresent() && product3.isPresent()){
+            createOrderProduct(co3.get(),product3.get(),1L);
+        }
+    }
+
+    @Test
+    void createClientOrderObjects(){
+    createClientOrder(clientRepository.findByFullName("Кабисов Валерий Юрьевич"),1,1150.00);
+    createClientOrder(clientRepository.findByFullName("Зубенко Михаил Петрович"),2,1000.99);
+    createClientOrder(clientRepository.findByFullName("Пупкина Алевтина Леопольдовна"),3,650.99);
+
     }
 }
 

@@ -10,10 +10,10 @@ public class OrderProduct {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private ClientOrder clientOrder;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Product product;
 
     @Column

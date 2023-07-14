@@ -10,7 +10,7 @@ public class ClientOrder {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     private Client client;
 
     @Column(nullable = false)
